@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, Link } from 'react-router-dom';
+import { EditForm1 } from '../Form/Form';
 import { Box } from '../Styles/StyledComponents';
 
 
@@ -23,7 +24,7 @@ export const Flight = () => {
     }
 
     const updateFlight = (id, newFlight) => {
-
+console.log( { ...newFlight })
         axios.put(`http://localhost:8085/${id}`, { ...newFlight }
         );
     }
@@ -63,7 +64,7 @@ export const Flight = () => {
         <>
             <Box>
                 <div>
-                    <h3>Flight Number:   <span id='test' display>{location.state.flightNumber} </span></h3>
+                    <h3>Flight Number:   <span id='test'>{location.state.flightNumber} </span></h3>
                     <p >Departure: {location.state.departDate} at {location.state.departTime} from {location.state.departAirport}</p>
                     <p >Arrival: {location.state.arriveDate} at {location.state.arriveTime} at {location.state.arriveAirport}</p>
                     <p >Number of Passengers: {location.state.numPassengers}</p>
@@ -73,6 +74,7 @@ export const Flight = () => {
                     <Link to="/flights"><button onClick={() => deleteFlight(location.state._id)}>Delete</button></Link>
                 </div>
             </Box>
+            <EditForm1/>
         </>
     )
 }

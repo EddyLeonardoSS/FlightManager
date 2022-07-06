@@ -1,9 +1,10 @@
 import React from 'react';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
+
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { BoxSingle, FlightItem } from '../Styles/StyledComponents';
-import { set } from 'mongoose';
+import { Box, Dropdown, DropdownBox, FlightItem, SearchInput } from '../Styles/StyledComponents';
+
 
 
 
@@ -12,6 +13,13 @@ export const SearchFlights = () => {
     const [flightList, setFlights] = useState([]);
     const navigate = useNavigate(null);
     const [ref, setRef] = useState({});
+    const [selectRef, setSelectRef] = useState({
+        isClearable: true,
+        isDisabled: false,
+        isLoading: false,
+        isRtl: false,
+        isSearchable: false,
+    });
 
     const getFlights = () => {
         console.log("Request from searchFlights");
@@ -24,40 +32,49 @@ export const SearchFlights = () => {
         navigate(`/flights/${flight._id}`, { state: { ...flight } });
     }
 
-    const searchFlights = flight => {
-        // Loops through array of flight objects and sets ref to specified flight object
+
+    // Loops through array of flight objects and sets ref to specified flight object
+    const searchFlights = (flight, dropdown) => {
+
+
+        const input = document.getElementById("search");
+        if (dropdown === "flightNumber") {
+            input.setAttribute("type", "number");
+        }
+        else {
+            input.setAttribute("type", "text");
+        }
+
         let found = false;
         let count = 0;
-        
-        while(!found) {
+
+        while (!found) {
             const flights = flightList[count];
-            if (flight == flights.flightNumber) {
+
+            if (flight == flights[dropdown]) {
 
                 setRef(flights);
-                console.log(flights)
                 found = true;
-                
-                
             }
-            else if (flight !== flights.flightNumber) {
-                console.log("no match")
-                setRef({
-                    flightNumber: 0
-                })
-                
-                
+            else if (flight !== flights[dropdown]) {
 
+                setRef({
+                    flightNumber: 0,
+                    departAirport: ""
+                })
             }
             count++;
-            
         }
     }
 
 
     const handleChange = (event) => {
-        // Passes specific flight to searchFlights from input field
-        searchFlights(event.target.value);
         event.preventDefault();
+        // Passes specific flight to searchFlights from input field
+        const dropdown = document.getElementById("searchMenu");
+        console.log(dropdown.value)
+        searchFlights(event.target.value, dropdown.value);
+
 
     }
 
@@ -65,37 +82,48 @@ export const SearchFlights = () => {
         getFlights();
     }, [])
 
-    
+
     return (
         <>
+            <DropdownBox>
+                <label htmlFor='searchMenu'>Filter Search by:  </label>
 
-            <label htmlFor='searchMenu'>Search  </label>
-            <select id='searchMenu'>
+                <Dropdown id='searchMenu' onChange={handleChange}>
 
-                <option>Flight Number</option>
-                <option>Depature Airport</option>
+                    <option value="flightNumber" >Flight Number</option>
+                    <option value="departAirport" >Depature Airport</option>
 
-            </select>
-            <input type='number' defaultValue={0} id='search' onChange={handleChange}></input>
-            <BoxSingle>
+                </Dropdown>
 
-                {ref ?
 
-                    <FlightItem key={ref._id}>
-                        <h3>Flight Number: {ref.flightNumber}</h3>
-                        <p>Departure Date: {ref.departDate ? ref.departDate : "TBA"}</p>
-                        <button onClick={() => viewDetails(ref)}>View Details</button>
+            </DropdownBox>
+            <DropdownBox>
+                <SearchInput type='number' defaultValue={""} placeholder="Search..." id='search' onChange={handleChange}></SearchInput>
 
-                    </FlightItem>
+            </DropdownBox>
+            
 
-                    :
-                    <FlightItem>
-                        <h3>No Flights found: </h3>
-                        
 
-                    </FlightItem>}
 
-            </BoxSingle>
+            <Box>
+
+                {ref.flightNumber !== 0 ? flightList.filter(flight => flight[document.getElementById("searchMenu").value] === ref[document.getElementById("searchMenu").value]).map(flights => {
+                    return (
+                        <>
+
+                            <FlightItem >
+                                <h3>Flight Number: {flights.flightNumber}</h3>
+                                <p>Departure Date: {flights.departDate ? flights.departDate : "TBA"}</p>
+                                <button onClick={() => viewDetails(flights)}>View Details</button>
+
+                            </FlightItem>
+
+                        </>
+                    )
+                }) : <h3>No data found</h3>}
+
+
+            </Box>
 
         </>
     )

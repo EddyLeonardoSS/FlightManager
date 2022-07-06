@@ -54,10 +54,7 @@ export const FlightList = () => {
                         </>
                     )
                 }) : <h3>No data found</h3>}
-                <div>
-
-                </div>
-                
+               
             </Box>
             
         </>

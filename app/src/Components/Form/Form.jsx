@@ -123,7 +123,8 @@ export const EditForm1 = () => {
     // useState for handling state changes to the page
     const location = useLocation([]);
     const [editFlightInfo, setEditFlightInfo] = useState(location);
-    const arr = {...editFlightInfo.state}
+    
+    
 
     // Handles updating the text of each input field
     const handleChange = (event) => {
@@ -136,8 +137,18 @@ export const EditForm1 = () => {
         event.preventDefault();
         const input = document.getElementById("flightNumber");
 
-        editFlightInfo.state.flightNumber = input.value;
-            console.log({...editFlightInfo.state})
+        
+        
+        const form = document.getElementById("editForm");
+       
+        
+            Array.from(form.elements).forEach(input =>{
+                
+                editFlightInfo.state[input.name] = input.value;
+            })
+            
+       
+           
             axios.put(`http://localhost:8085/${location.state._id}`, { ...editFlightInfo }
             );
         
@@ -149,42 +160,42 @@ export const EditForm1 = () => {
         return (
             <>
                 <StyledForm>
-                    <form  >
+                    <form  id='editForm'>
                         <div>
                             <label>Flightsdasdr:
-                                <input id="flightNumber" name='flightNumber' type="number" placeholder="Flight Number" value={arr.flightNumber} onChange={handleChange}></input>
+                                <input id="flightNumber" name='flightNumber' type="number" placeholder="Flight Number" defaultValue={editFlightInfo.state.flightNumber} onChange={handleChange}></input>
                             </label></div>
                         <div>
                             <label >Departure Date:
-                                <input name="departDate" type="text" placeholder="MM/DD/YYYY" value={location.state.departDate} onChange={handleChange}></input>
+                                <input id="departDate" name="departDate" type="text" placeholder="MM/DD/YYYY" defaultValue={editFlightInfo.state.departDate} onChange={handleChange}></input>
                             </label></div>
                         <div>
                             <label >Arrival Date:
-                                <input name="arriveDate" type="text" placeholder="MM/DD/YYYY" value={location.state.arriveDate} onChange={handleChange}></input>
+                                <input id="arriveDate" name="arriveDate" type="text" placeholder="MM/DD/YYYY" defaultValue={editFlightInfo.state.arriveDate} onChange={handleChange}></input>
                             </label></div>
                         <div>
                             <label >Departure Time:
-                                <input name="departTime" type="text" placeholder="HH:mm" value={location.state.departTime} onChange={handleChange}></input>
+                                <input id="departTime" name="departTime" type="text" placeholder="HH:mm" defaultValue={editFlightInfo.state.departTime} onChange={handleChange}></input>
                             </label></div>
                         <div>
                             <label >Arrival Time:
-                                <input name="arriveTime" type="text" placeholder="HH:mm" value={location.state.arriveTime} onChange={handleChange}></input>
+                                <input id="arriveTime" name="arriveTime" type="text" placeholder="HH:mm" defaultValue={editFlightInfo.state.arriveTime} onChange={handleChange}></input>
                             </label></div>
                         <div>
                             <label >Departure Airport:
-                                <input name="departAirport" type="text" placeholder="Departure Airport" value={location.state.departAirport} onChange={handleChange}></input>
+                                <input id="departAirport" name="departAirport" type="text" placeholder="Departure Airport" defaultValue={editFlightInfo.state.departAirport} onChange={handleChange}></input>
                             </label></div>
                         <div>
                             <label >Arrival Airport:
-                                <input name="arriveAirport" type="text" placeholder="Arrival Airport" value={location.state.arriveAirport} onChange={handleChange}></input>
+                                <input id="arriveAirport" name="arriveAirport" type="text" placeholder="Arrival Airport" defaultValue={editFlightInfo.state.arriveAirport} onChange={handleChange}></input>
                             </label></div>
                         <div>
                             <label >Number of Passengers:
-                                <input name="numPassengers" type="number" placeholder="Number of Passengers" value={location.state.numPassengers} onChange={handleChange}></input>
+                                <input id="numPassengers" name="numPassengers" type="number" placeholder="Number of Passengers" defaultValue={editFlightInfo.state.numPassengers} onChange={handleChange}></input>
                             </label></div>
                         <div>
                             <label>Passenger Limit:
-                                <input name="passengerLimit" type="number" placeholder="Passenger Limit" value={location.state.passengerLimit} onChange={handleChange}></input>
+                                <input id="passengerLimit"name="passengerLimit" type="number" placeholder="Passenger Limit" defaultValue={editFlightInfo.state.passengerLimit} onChange={handleChange}></input>
                             </label></div>
 
                             <input type="submit" onClick={handleSubmit} />

@@ -13,7 +13,9 @@ app.use(cors());
 const flightRouter = require('./Routes/flight.route');
 
 app.use('/', flightRouter);
+app.use('/flights', flightRouter);
 app.use('/:id', flightRouter);
+app.use('/flights/:id', flightRouter);
 
 app.connect('*', (req,res) => {
     res.status(404).send('404 Not Found');

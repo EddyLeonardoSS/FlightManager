@@ -18,6 +18,16 @@ router.get('/:id', async (req, res) => {
         res.status(err?.status || 400).json(err);
     }
 });
+router.get('/flights/:id', async (req, res) => {
+    try {
+        
+        const flight = await findFlightById(req.params.id);
+        console.log("specific")
+        res.json(flight);
+    } catch (err) {
+        res.status(err?.status || 400).json(err);
+    }
+});
 
 router.post('/', async (req, res) => {
     try{

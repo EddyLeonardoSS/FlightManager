@@ -9,7 +9,7 @@ import { Box, FlightItem } from '../Styles/StyledComponents';
 export const FlightList = () => {
 
     const [flights, setFlights] = useState([]);
-    const navigate = useNavigate(null);
+    const navigate = useNavigate();
     
 
     const getFlights = () => {

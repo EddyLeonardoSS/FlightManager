@@ -13,13 +13,7 @@ export const SearchFlights = () => {
     const [flightList, setFlights] = useState([]);
     const navigate = useNavigate(null);
     const [ref, setRef] = useState({});
-    const [selectRef, setSelectRef] = useState({
-        isClearable: true,
-        isDisabled: false,
-        isLoading: false,
-        isRtl: false,
-        isSearchable: false,
-    });
+    
 
     const getFlights = () => {
         console.log("Request from searchFlights");
@@ -89,7 +83,6 @@ export const SearchFlights = () => {
                 <label htmlFor='searchMenu'>Filter Search by:  </label>
 
                 <Dropdown id='searchMenu' onChange={handleChange}>
-
                     <option value="flightNumber" >Flight Number</option>
                     <option value="departDate" >Depature Date</option>
                     <option value="arriveDate" >Arrival Date</option>

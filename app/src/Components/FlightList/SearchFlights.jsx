@@ -38,7 +38,7 @@ export const SearchFlights = () => {
 
 
         const input = document.getElementById("search");
-        if (dropdown === "flightNumber") {
+        if (dropdown === "flightNumber" || dropdown === "numPassengers" || dropdown === "passengerLimit") {
             input.setAttribute("type", "number");
         }
         else {
@@ -91,8 +91,14 @@ export const SearchFlights = () => {
                 <Dropdown id='searchMenu' onChange={handleChange}>
 
                     <option value="flightNumber" >Flight Number</option>
+                    <option value="departDate" >Depature Date</option>
+                    <option value="arriveDate" >Arrival Date</option>
+                    <option value="departTime" >Depature Time</option>
+                    <option value="arriveTime" >Arrival Time</option>
                     <option value="departAirport" >Depature Airport</option>
-
+                    <option value="arriveAirport" >Arrival Airport</option>
+                    <option value="numPassengers" >Number of Passengers</option>
+                    <option value="passengerLimit" >Passenger Limit</option>
                 </Dropdown>
 
 

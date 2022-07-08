@@ -23,13 +23,13 @@ import { DeleteSuccess } from '../Snackbars';
 
 export const SearchFlights = () => {
 
-    const location = useLocation([]);
-    const [flightList, setFlights] = useState([]);
-    const navigate = useNavigate(null);
-    const [ref, setRef] = useState({});
-    const [checked, setChecked] = useState(false);
+    const location = useLocation([]);               // Holds the "active" state of flights for passing to forms
+    const [flightList, setFlights] = useState([]);  // Standard state for flights
+    const navigate = useNavigate(null);             // Used for holding the state and "passing" the location state to edit/add forms
+    const [ref, setRef] = useState({});             // Used for transferring state of search between renders
+    const [checked, setChecked] = useState(false);  //Used for toggling snackbars
 
-    console.log(location)
+    
     const getFlights = () => {
         console.log("Request from searchFlights");
         axios.get('http://localhost:8085/flights')
@@ -37,6 +37,8 @@ export const SearchFlights = () => {
             .catch(err => console.error(err));
 
     }
+
+    // "Navigates" to the same page, essentially passing the current state of the specified flight to the editForm
     const viewDetails = flight => {
         navigate(`/searchFlights`, { state: { ...flight } });
     }
@@ -69,6 +71,7 @@ export const SearchFlights = () => {
             count++;
         }
     }
+
     const deleteFlight = async id => {
         setChecked(true);
         await axios.delete(`http://localhost:8085/${id}`);
@@ -79,7 +82,7 @@ export const SearchFlights = () => {
         getFlights();
     }, [])
 
-
+    // calls searchFLights to filter based on current dropdown menu selection
     const handleChange = (event) => {
         event.preventDefault();
         // Passes specific flight to searchFlights from input field
@@ -88,6 +91,7 @@ export const SearchFlights = () => {
         searchFlights(event.target.value, dropdown.value);
     }
 
+    // function necessary for expanding the cards and revealing more information about each flight
     const ExpandMore = styled((props) => {
         const { expand, ...other } = props;
 
@@ -101,6 +105,7 @@ export const SearchFlights = () => {
                 duration: theme.transitions.duration.shortest,
             }),
         }));
+    // State for expansion of the cards
     const [expanded, setExpanded] = useState({
         isExpanded: false,
         key: ''
@@ -126,6 +131,7 @@ export const SearchFlights = () => {
 
     return (
         <>
+        
             <DropdownBox>
                 <label htmlFor='searchMenu'>Filter Search by:  </label>
                 <Dropdown id='searchMenu' onChange={handleChange}>

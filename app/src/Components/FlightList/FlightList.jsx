@@ -38,7 +38,7 @@ export const FlightList = () => {
         navigate(`/flights`, { state: { ...flight } });
     }
 
-    // useState for card expansion
+    //  State for expansion of the cards
     const [expanded, setExpanded] = useState({
         isExpanded: false,
         key: ''
@@ -52,6 +52,7 @@ export const FlightList = () => {
         });
     };
 
+    // function necessary for expanding the cards and revealing more information about each flight
     const ExpandMore = styled((props) => {
         const { expand, ...other } = props;
         return <IconButton {...other} />;

@@ -4,7 +4,7 @@ import {  SearchFlights } from './Components/FlightList';
 import { AppNav } from './Features';
 
 
-import { Flights, Landing } from './Pages'
+import { Flights } from './Pages'
 
 const App = () => {
     return (

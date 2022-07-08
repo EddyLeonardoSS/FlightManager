@@ -1,12 +1,13 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import { useState } from 'react';
 import Modal from '@mui/material/Modal';
 import { EditForm1, Form } from '../Form/Form';
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import AddIcon from '@mui/icons-material/Add';
 
+// These Components use the BasicModal component from Material-UI.
+// They simulate a popup in which the Forms are displayed
 
 const style = {
   display: "flex",
@@ -23,21 +24,27 @@ const style = {
   p: 4,
 };
 
+const hoverSX = {
+  '&:hover': {
+      color: 'green'
+  },
+  
+}
 export const EditFlightModal = () =>{
   const [open, setOpen] = useState(false);
   
   const handleOpen = () => {
     setOpen(true)
   };
+
   const handleClose = async () => {
-    
     setOpen(false);
    await window.location.reload();
 };
 
   return (
     <div>
-      <Button onClick={handleOpen}><ModeEditOutlineOutlinedIcon/></Button>
+      <ModeEditOutlineOutlinedIcon sx={hoverSX} onClick={handleOpen}/>
       <Modal
         open={open}
         onClose={handleClose}
@@ -66,7 +73,7 @@ export const AddFlightModal = () =>{
 
   return (
     <div>
-      <Button onClick={handleOpen}><AddIcon/></Button>
+      <AddIcon sx={hoverSX} onClick={handleOpen}/>
       <Modal
         open={open}
         onClose={handleClose}

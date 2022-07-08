@@ -22,11 +22,7 @@ export const Form = () => {
 
     // Handles updating the text of each TextField field
     const handleChange = (event) => {
-
-
-        //console.log(event.target.name)
         setFlightInfo(prev => ({ ...prev, [event.target.name]: event.target.value }));
-        console.log()
         event.preventDefault();
 
     }
@@ -65,16 +61,7 @@ export const Form = () => {
                 passengerLimit: 0
             })
             setChecked(true);
-            
         }
-
-            
-       
-
-
-
-        
-
     }
 
 
@@ -84,7 +71,7 @@ export const Form = () => {
                 <form >
                 <h2 style={{marginLeft: '50px'}}>Add Flight</h2>
                 <div style={{ marginTop: "8px", marginBottom: "8px" }}>
-                        <TextField  label="Flight Number" required name="flightNumber" error={!(flightInfo.flightNumber.length <= 6)} type="number" placeholder="Flight Number" value={flightInfo.flightNumber} onChange={handleChange}></TextField>
+                        <TextField  label="Flight Number" required name="flightNumber" error={!(flightInfo.flightNumber.length <= 6)|| flightInfo.flightNumber.length === 0} type="number" placeholder="Flight Number" value={flightInfo.flightNumber} onChange={handleChange}></TextField>
                     </div>
                     <div style={{ marginTop: "8px", marginBottom: "8px" }}>
                         <TextField label="Departure Date" required error={!flightInfo.departDate.match(/^\d\d\/\d\d\/\d\d\d\d$/)} name="departDate" type="text" placeholder="MM/DD/YYYY" value={flightInfo.departDate} onChange={handleChange}></TextField>
@@ -193,7 +180,7 @@ export const EditForm1 = (flight) => {
                 <form id='editForm' >
                     <h2 style={{marginLeft: '50px'}}>Edit Flight</h2>
                 <div style={{ marginTop: "8px", marginBottom: "8px" }}>
-                        <TextField  label="Flight Number" required name="flightNumber" error={!(editFlightInfo.flightNumber.length <= 6)} type="number" placeholder="Flight Number" value={editFlightInfo.flightNumber} onChange={handleChange}></TextField>
+                        <TextField  label="Flight Number" required name="flightNumber" error={!(editFlightInfo.flightNumber.length <= 6) || editFlightInfo.flightNumber.length === 0} type="number" placeholder="Flight Number" value={editFlightInfo.flightNumber} onChange={handleChange}></TextField>
                     </div>
                     <div style={{ marginTop: "8px", marginBottom: "8px" }}>
                         <TextField label="Departure Date" required error={(!editFlightInfo.departDate.match(/^\d\d\/\d\d\/\d\d\d\d$/))} name="departDate" type="text" placeholder="MM/DD/YYYY" value={editFlightInfo.departDate} onChange={handleChange}></TextField>

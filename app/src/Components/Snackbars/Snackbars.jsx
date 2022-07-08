@@ -2,6 +2,9 @@ import React from "react";
 import { Alert, Snackbar } from '@mui/material';
 import { useState } from 'react';
 
+// These Components utilize the Snackbar component in Material-UI
+// A small alert will apear when the useState is set to true
+
 export const EditSuccess = () => {
   const [checked, setChecked] = useState(true);
 

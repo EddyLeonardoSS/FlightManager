@@ -5,7 +5,7 @@ export const Flights = () => {
     return (
         <>
             
-            <FlightList/>
+            <FlightList />
         </>
     )
 }

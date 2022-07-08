@@ -105,6 +105,8 @@ export const SearchFlights = () => {
         isExpanded: false,
         key: ''
     });
+
+    // Handles card expand and specifies the id of the flight/card to avoid expanding all cards
     const handleExpandClick = (id, e) => {
 
         setExpanded({
@@ -113,11 +115,19 @@ export const SearchFlights = () => {
         });
     };
 
+     // SX is essentially style={}.
+    // This overrides the on hover effect
+    const deleteHoverSX = {
+        '&:hover': {
+            color: 'red'
+        },
+        marginBottom: "6px",
+    }
+
     return (
         <>
             <DropdownBox>
                 <label htmlFor='searchMenu'>Filter Search by:  </label>
-
                 <Dropdown id='searchMenu' onChange={handleChange}>
                     <option value="flightNumber" >Flight Number</option>
                     <option value="departDate" >Depature Date</option>
@@ -129,8 +139,6 @@ export const SearchFlights = () => {
                     <option value="numPassengers" >Number of Passengers</option>
                     <option value="passengerLimit" >Passenger Limit</option>
                 </Dropdown>
-
-
             </DropdownBox>
             <DropdownBox>
                 <SearchInput type='number' defaultValue={""} placeholder="Search..." id='search' onChange={handleChange}></SearchInput>
@@ -146,7 +154,7 @@ export const SearchFlights = () => {
                     return (
                         <>
                             <Grid padding={5} position="unset" >
-                                <Card sx={{ width: 345 }} key={flight._id}>
+                                <Card sx={{ width: 345, backgroundColor: "#c2dde6" }} key={flight._id}>
                                     <CardHeader
 
                                         action={
@@ -159,10 +167,10 @@ export const SearchFlights = () => {
                                     />
 
                                     <CardContent sx={{ marginLeft: 4 }}>
-                                        <Typography variant="h3" color="text.secondary" >
+                                        <Typography variant="h3" color="text" >
                                             {`${flight.departAirport}`}
                                             <IconButton aria-label="settings">
-                                                <FlightTakeoffIcon sx={{ fontSize: 42, marginLeft: 1, marginRight: 1 }} />
+                                                <FlightTakeoffIcon sx={{ fontSize: 42, marginLeft: 1, marginRight: 1, color: "black" }} />
                                             </IconButton>
                                             {`${flight.arriveAirport}`}
                                         </Typography>
@@ -170,12 +178,13 @@ export const SearchFlights = () => {
 
                                     </CardContent>
                                     <CardActions disableSpacing>
+                                        {/* location is being passed as the current flight state, allowing the form to be preloaded with the information */}
                                         <IconButton aria-label="Edit Flight" onClick={() => viewDetails(flight)}>
                                             <EditFlightModal flight={location} />
                                         </IconButton>
 
                                         <IconButton aria-label="delete" onClick={() => deleteFlight(flight._id)}>
-                                            <DeleteForeverRounded />
+                                            <DeleteForeverRounded  sx={deleteHoverSX} />
                                         </IconButton>
                                         <ExpandMore
                                             expand={expanded.isExpanded}
@@ -189,14 +198,14 @@ export const SearchFlights = () => {
                                     <Collapse in={expanded.isExpanded && expanded.key === flight._id} timeout="auto" unmountOnExit>
                                         <CardContent>
                                             <Typography paragraph>
-                                                <p>Flight Number:  {flight.flightNumber}</p>
-                                                <p >Departure Date: {flight.departDate}</p>
-                                                <p >Departure Time: {flight.departTime}</p>
-                                                <p >Departure Airport: {flight.departAirport}</p>
-                                                <p >Arrival Date: {flight.arriveDate} </p>
-                                                <p >Arrival Time: {flight.arriveTime}</p>
-                                                <p >Arrival Airport: {flight.arriveAirport}</p>
-                                                <p >Passengers: {flight.numPassengers}/{flight.passengerLimit}</p>
+                                                <p>Flight Number:  <span style={{ fontWeight: 'bold' }}>{flight.flightNumber}</span></p>
+                                                <p >Departure Date: <span style={{ fontWeight: 'bold' }}>{flight.departDate}</span></p>
+                                                <p >Departure Time: <span style={{ fontWeight: 'bold' }}>{flight.departTime}</span></p>
+                                                <p >Departure Airport: <span style={{ fontWeight: 'bold' }}>{flight.departAirport}</span></p>
+                                                <p >Arrival Date: <span style={{ fontWeight: 'bold' }}>{flight.arriveDate}</span> </p>
+                                                <p >Arrival Time: <span style={{ fontWeight: 'bold' }}>{flight.arriveTime}</span></p>
+                                                <p >Arrival Airport: <span style={{ fontWeight: 'bold' }}>{flight.arriveAirport}</span></p>
+                                                <p >Passengers: <span style={{ fontWeight: 'bold' }}>{flight.numPassengers}/{flight.passengerLimit}</span></p>
                                             </Typography>
 
                                         </CardContent>

@@ -1,3 +1,3 @@
 export * from './FlightList';
-export * from './Flight';
 export * from './SearchFlights';
+export * from './Card';
